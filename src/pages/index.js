@@ -63,9 +63,6 @@ export default function Home() {
   const flipImages = () => {
     let [tempPrimary, tempRand] = [randImage, primaryImage];
     setIsFlipped(!isFlipped);
-    if (isFlipped) {
-      console.log(primaryImage);
-    }
     setPrimaryImage(tempPrimary);
     setRandImage(tempRand);
   };
