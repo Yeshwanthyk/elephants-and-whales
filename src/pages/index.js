@@ -40,6 +40,21 @@ export default function Home() {
     reader.readAsDataURL(file);
   };
 
+  const shuffleImages = (e) => {
+    e.preventDefault();
+
+    axios
+      .get('https://res.cloudinary.com/yesh/image/list/rand.json')
+      .then((res) => {
+        let imgResources = res.data.resources;
+
+        let selectedImg =
+          imgResources[Math.floor(Math.random() * imgResources.length)];
+
+        setRandImage(selectedImg.public_id);
+      });
+  };
+
   return (
     <Box>
       <Head>
