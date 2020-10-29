@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import { Box, Button, Flex, Image as ChakraImage } from '@chakra-ui/core';
+import { Box, Flex, Image as ChakraImage } from '@chakra-ui/core';
+import UIButton from '../components/UIButton';
+import PrimaryImage from '../components/PrimaryImage';
+import RandImage from '../components/RandImage';
 
 const Input = styled.input`
   width: 0.1px;
@@ -78,57 +80,33 @@ export default function Home() {
       <Box>
         <Flex flexDirection="column" m={4}>
           <Box py={4}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Input type="file" name="file" id="file" ref={register} />
-              <InputLabel htmlFor="file">Choose a file</InputLabel>
-              {errors.selectFile && <span>This field is required</span>}
-              <input type="submit" />
-            </form>
-            <Button my={4} onClick={shuffleImages}>
-              Rand
-            </Button>
-            <Button m={4} onClick={flipImages}>
-              Flip
-            </Button>
+            <Flex align="center" justify="center">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Input type="file" name="file" id="file" ref={register} />
+                <InputLabel htmlFor="file">Choose a file</InputLabel>
+                {errors.selectFile && <span>This field is required</span>}
+                <input type="submit" />
+              </form>
+            </Flex>
+            <Flex justify="space-evenly">
+              <UIButton onClick={shuffleImages}> Rand </UIButton>
+              <UIButton onClick={flipImages}> Flip </UIButton>
+            </Flex>
           </Box>
 
           {!isFlipped && (
             <>
               <Flex align="center" justify="center" m={4}>
-                <Box px={4}>
-                  <ChakraImage src={primaryImage} />
-                </Box>
-                <Box>
-                  <CloudinaryContext cloudName="yesh">
-                    <Image publicId={randImage}>
-                      <Transformation
-                        crop="scale"
-                        dpr="auto"
-                        responsive_placeholder="blank"
-                      />
-                    </Image>
-                  </CloudinaryContext>
-                </Box>
+                <PrimaryImage img={primaryImage} />
+                <RandImage public_id={randImage} />
               </Flex>
             </>
           )}
           {isFlipped && (
             <>
               <Flex align="center" justify="center" m={4}>
-                <Box>
-                  <CloudinaryContext cloudName="yesh">
-                    <Image publicId={primaryImage}>
-                      <Transformation
-                        crop="scale"
-                        dpr="auto"
-                        responsive_placeholder="blank"
-                      />
-                    </Image>
-                  </CloudinaryContext>
-                </Box>
-                <Box px={4}>
-                  <ChakraImage src={randImage} />
-                </Box>
+                <RandImage public_id={primaryImage} />
+                <PrimaryImage img={randImage} />
               </Flex>
             </>
           )}
