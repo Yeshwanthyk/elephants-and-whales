@@ -28,6 +28,7 @@ const InputLabel = styled.label`
 export default function Home() {
   const [primaryImage, setPrimaryImage] = useState('');
   const [randImage, setRandImage] = useState('');
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const { register, handleSubmit, watch, errors } = useForm();
 
@@ -57,6 +58,16 @@ export default function Home() {
       });
   };
 
+  const flipImages = () => {
+    let [tempPrimary, tempRand] = [randImage, primaryImage];
+    setIsFlipped(!isFlipped);
+    if (isFlipped) {
+      console.log(primaryImage);
+    }
+    setPrimaryImage(tempPrimary);
+    setRandImage(tempRand);
+  };
+
   return (
     <Box>
       <Head>
@@ -76,24 +87,51 @@ export default function Home() {
             <Button my={4} onClick={shuffleImages}>
               Rand
             </Button>
+            <Button m={4} onClick={flipImages}>
+              Flip
+            </Button>
           </Box>
 
-          <Flex align="center" justify="center" m={4}>
-            <Box px={4}>
-              <ChakraImage src={primaryImage} />
-            </Box>
-            <Box>
-              <CloudinaryContext cloudName="yesh">
-                <Image publicId={randImage}>
-                  <Transformation
-                    crop="scale"
-                    dpr="auto"
-                    responsive_placeholder="blank"
-                  />
-                </Image>
-              </CloudinaryContext>
-            </Box>
-          </Flex>
+          {!isFlipped && (
+            <>
+              <Flex align="center" justify="center" m={4}>
+                <Box px={4}>
+                  <ChakraImage src={primaryImage} />
+                </Box>
+                <Box>
+                  <CloudinaryContext cloudName="yesh">
+                    <Image publicId={randImage}>
+                      <Transformation
+                        crop="scale"
+                        dpr="auto"
+                        responsive_placeholder="blank"
+                      />
+                    </Image>
+                  </CloudinaryContext>
+                </Box>
+              </Flex>
+            </>
+          )}
+          {isFlipped && (
+            <>
+              <Flex align="center" justify="center" m={4}>
+                <Box>
+                  <CloudinaryContext cloudName="yesh">
+                    <Image publicId={primaryImage}>
+                      <Transformation
+                        crop="scale"
+                        dpr="auto"
+                        responsive_placeholder="blank"
+                      />
+                    </Image>
+                  </CloudinaryContext>
+                </Box>
+                <Box px={4}>
+                  <ChakraImage src={randImage} />
+                </Box>
+              </Flex>
+            </>
+          )}
         </Flex>
       </Box>
     </Box>
