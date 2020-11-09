@@ -49,7 +49,7 @@ export default function Home() {
     e.preventDefault();
 
     axios
-      .get('https://res.cloudinary.com/yesh/image/list/rand.json')
+      .get('https://res.cloudinary.com/yesh/image/list/home.json')
       .then((res) => {
         let imgResources = res.data.resources;
 
@@ -82,18 +82,18 @@ export default function Home() {
                 <Input type="file" name="file" id="file" ref={register} />
                 <InputLabel htmlFor="file">Choose a file</InputLabel>
                 {errors.selectFile && <span>This field is required</span>}
-                <input type="submit" />
+		<input type="submit" style={{color: 'black'}} />
               </form>
             </Flex>
             <Flex justify="space-evenly">
-              <UIButton onClick={shuffleImages}> Rand </UIButton>
-              <UIButton onClick={flipImages}> Flip </UIButton>
+              <UIButton onClick={shuffleImages} > Rand </UIButton>
+              <UIButton onClick={flipImages} > Flip </UIButton>
             </Flex>
           </Box>
 
           {!isFlipped && (
             <>
-              <Flex align="center" justify="center" m={4}>
+              <Flex align="center" justify="center" m={4} width="70%" ml={["8rem", "12rem"]}>
                 <PrimaryImage img={primaryImage} />
                 <RandImage public_id={randImage} />
               </Flex>
@@ -101,7 +101,7 @@ export default function Home() {
           )}
           {isFlipped && (
             <>
-              <Flex align="center" justify="center" m={4}>
+              <Flex align="center" justify="center" m={4} width="70%" ml={["8rem", "12rem"]}>
                 <RandImage public_id={primaryImage} />
                 <PrimaryImage img={randImage} />
               </Flex>
